@@ -24,6 +24,7 @@ namespace TruckingCompanyApi.Controllers
 
                 var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("qwertyuiopasdfghjklzxcvbnm123456fvyhijlxspias98uxincokwi9cujnc"));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                System.Console.WriteLine("..");
 
                 var token = new JwtSecurityToken(
                     issuer: "http://localhost:5000",
