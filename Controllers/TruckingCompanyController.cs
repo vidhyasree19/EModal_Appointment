@@ -54,11 +54,11 @@ namespace TruckingCompanyApi.Controllers
             if (existingCompany == null)
                 return NotFound();
 
-            existingCompany.TruckingCompany_Name = company.TruckingCompany_Name;
-            existingCompany.Truck_No = company.Truck_No;
-            existingCompany.Driver_Name = company.Driver_Name;
-            existingCompany.Chassis = company.Chassis;
-            existingCompany.Container_Size = company.Container_Size;
+            existingCompany.Name = company.Name;
+            // existingCompany.Truck_No = company.Truck_No;
+            // existingCompany.Driver_Name = company.Driver_Name;
+            // existingCompany.Chassis = company.Chassis;
+            // existingCompany.Container_Size = company.Container_Size;
 
             _context.TruckingCompanies.Update(existingCompany);
             _context.SaveChanges();

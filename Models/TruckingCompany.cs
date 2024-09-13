@@ -15,6 +15,10 @@ public class TruckingCompany
     public int Id { get; set; }
     public string Name { get; set; }
     public WorkType WorkType { get; set; }
+
+    public ICollection<Truck> Trucks { get; set; } = new List<Truck>();
+    public ICollection<Driver> Drivers { get; set; } = new List<Driver>();
+
 }
 
 public enum WorkType
