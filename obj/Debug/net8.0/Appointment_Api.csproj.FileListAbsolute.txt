@@ -284,3 +284,5 @@ D:\EModal_Appointment\obj\Debug\net8.0\Appointm.E8840E85.Up2Date
 D:\EModal_Appointment\obj\Debug\net8.0\Appointment_Api.genruntimeconfig.cache
 D:\EModal_Appointment\obj\Debug\net8.0\ref\Appointment_Api.dll
 D:\EModal_Appointment\bin\Debug\net8.0\Appointment_Api.xml
+C:\Users\VidhyaSreeChinthalap\Desktop\Emodal Appointment\Appointment_Api\bin\Debug\net8.0\Appointment_Api.xml
+C:\Users\VidhyaSreeChinthalap\Desktop\Emodal Appointment\Appointment_Api\obj\Debug\net8.0\Appointment_Api.sourcelink.json
