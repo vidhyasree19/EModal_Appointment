@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using TruckingCompanyApi.Models;
+using TermianlApi.Models;
 
-namespace TruckingCompanyApi.Data
+namespace AppointmentApi.Data
 {
     public class ApplicationDbContext : DbContext
     {
