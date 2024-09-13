@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Appointment_Api</name>
+    </assembly>
+    <members>
+        <member name="T:Appointment_Api.Migrations.initialcreate">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.initialcreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.initialcreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.initialcreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Appointment_Api.Migrations.TerminalCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.TerminalCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.TerminalCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.TerminalCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
