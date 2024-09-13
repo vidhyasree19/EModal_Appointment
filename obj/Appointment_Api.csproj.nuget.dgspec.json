@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\appointment\\EModal_Appointment\\Appointment_Api.csproj": {}
+    "C:\\Users\\VidhyaSreeChinthalap\\Desktop\\Emodal Appointment\\Appointment_Api\\Appointment_Api.csproj": {}
   },
   "projects": {
-    "D:\\appointment\\EModal_Appointment\\Appointment_Api.csproj": {
+    "C:\\Users\\VidhyaSreeChinthalap\\Desktop\\Emodal Appointment\\Appointment_Api\\Appointment_Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\appointment\\EModal_Appointment\\Appointment_Api.csproj",
+        "projectUniqueName": "C:\\Users\\VidhyaSreeChinthalap\\Desktop\\Emodal Appointment\\Appointment_Api\\Appointment_Api.csproj",
         "projectName": "Appointment_Api",
-        "projectPath": "D:\\appointment\\EModal_Appointment\\Appointment_Api.csproj",
-        "packagesPath": "C:\\Users\\PrashanthGanegoni\\.nuget\\packages\\",
-        "outputPath": "D:\\appointment\\EModal_Appointment\\obj\\",
+        "projectPath": "C:\\Users\\VidhyaSreeChinthalap\\Desktop\\Emodal Appointment\\Appointment_Api\\Appointment_Api.csproj",
+        "packagesPath": "C:\\Users\\VidhyaSreeChinthalap\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\VidhyaSreeChinthalap\\Desktop\\Emodal Appointment\\Appointment_Api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\PrashanthGanegoni\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\VidhyaSreeChinthalap\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -70,7 +70,7 @@
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.4.0, )"
+              "version": "[6.7.3, )"
             }
           },
           "imports": [
