@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TruckingCompanyApi.Models;
-using TruckingCompanyApi.Data;
+using AppointmentApi.Data;
 namespace TruckingCompanyApi.Controllers
 {
     [ApiController]
