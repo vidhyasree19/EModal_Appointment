@@ -4,6 +4,7 @@ using AppointmentApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Appointment_Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240913125055_AppointmentsCreated")]
+    partial class AppointmentsCreated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,6 +116,10 @@ namespace Appointment_Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Port")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("TerminalId")
                         .HasColumnType("int");
 
@@ -120,12 +127,17 @@ namespace Appointment_Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TruckId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TruckingCompanyId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TerminalId");
+
+                    b.HasIndex("TruckId");
 
                     b.HasIndex("TruckingCompanyId");
 
@@ -151,13 +163,21 @@ namespace Appointment_Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Truck", "Truck")
+                        .WithMany("Appointments")
+                        .HasForeignKey("TruckId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("TruckingCompany", "TruckingCompany")
-                        .WithMany()
+                        .WithMany("Appointments")
                         .HasForeignKey("TruckingCompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Terminal");
+
+                    b.Navigation("Truck");
 
                     b.Navigation("TruckingCompany");
                 });
@@ -167,8 +187,15 @@ namespace Appointment_Api.Migrations
                     b.Navigation("Appointments");
                 });
 
+            modelBuilder.Entity("Truck", b =>
+                {
+                    b.Navigation("Appointments");
+                });
+
             modelBuilder.Entity("TruckingCompany", b =>
                 {
+                    b.Navigation("Appointments");
+
                     b.Navigation("Trucks");
                 });
 #pragma warning restore 612, 618
