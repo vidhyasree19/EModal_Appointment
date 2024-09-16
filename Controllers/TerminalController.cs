@@ -55,37 +55,45 @@ namespace TermianlApi.Controllers
             }
         }
 
-        [HttpPost]
-        public IActionResult Create([FromBody] Terminal terminal)
-        {
-            if (terminal == null)
-                return BadRequest("Terminal object is null.");
-
-            if (!ModelState.IsValid)
-                return BadRequest("Invalid model object.");
-
-            try
-            {
-                _context.Terminals.Add(terminal);
-                _context.SaveChanges();
-                return CreatedAtAction(nameof(Get), new { id = terminal.Id }, terminal);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while creating the terminal.");
-                return StatusCode(500, "Internal server error.");
-            }
-        }
-
+  [HttpPost]
+public IActionResult Create([FromBody] Terminal terminal)
+{
+    if (terminal == null)
+        return BadRequest("Terminal object is null.");
+ 
+    if (!ModelState.IsValid)
+        return BadRequest("Invalid model object.");
+ 
+    try
+    {
+        // Check if a terminal with the same unique attribute already exists
+        var existingTerminal = _context.Terminals
+            .FirstOrDefault(t => t.Name == terminal.Name ||  t.GateNo == terminal.GateNo); // Replace 'UniqueAttribute' with your actual unique field
+ 
+        if (existingTerminal != null)
+            return Conflict("A terminal with the same name already exists."); // 409 Conflict status code
+ 
+        // Add and save the new terminal
+        _context.Terminals.Add(terminal);
+        _context.SaveChanges();
+        return CreatedAtAction(nameof(Get), new { id = terminal.Id }, terminal);
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "An error occurred while creating the terminal.");
+        return StatusCode(500, "Internal server error.");
+    }
+}
+ 
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] Terminal terminal)
         {
            if (terminal == null)
         return BadRequest("Terminal object is null.");
-
+ 
     if (terminal.Id != id)
         return BadRequest("Terminal ID mismatch.");
-
+ 
     if (!ModelState.IsValid)
         return BadRequest("Invalid model object.");
             try
@@ -93,16 +101,14 @@ namespace TermianlApi.Controllers
                 var existingTerminal = _context.Terminals.Find(id);
                 if (existingTerminal == null)
                     return NotFound();
-
+ 
                 // Update properties
-                existingTerminal.Name = terminal.Name;
-                existingTerminal.GateNo = terminal.GateNo;
                 existingTerminal.Slots = terminal.Slots;
                 existingTerminal.Amount = terminal.Amount;
-
+ 
                 _context.Terminals.Update(existingTerminal);
                 _context.SaveChanges();
-
+ 
                 return NoContent();
             }
             catch (Exception ex)

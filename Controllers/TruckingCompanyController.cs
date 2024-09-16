@@ -43,21 +43,46 @@ namespace TruckingCompanyApi.Controllers
         }
  
         // POST: api/TruckingCompany
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] TruckingCompany company)
-        {
-            if (company == null)
-                return BadRequest("TruckingCompany cannot be null.");
+        // [HttpPost]
+        // public async Task<IActionResult> Create([FromBody] TruckingCompany company)
+        // {
+        //     if (company == null)
+        //         return BadRequest("TruckingCompany cannot be null.");
  
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+        //     if (!ModelState.IsValid)
+        //         return BadRequest(ModelState);
  
-            _context.TruckingCompanies.Add(company);
-            await _context.SaveChangesAsync();
+        //     _context.TruckingCompanies.Add(company);
+        //     await _context.SaveChangesAsync();
  
-            return CreatedAtAction(nameof(Get), new { id = company.Id }, company);
-        }
+        //     return CreatedAtAction(nameof(Get), new { id = company.Id }, company);
+        // }
+ [HttpPost]
+public async Task<IActionResult> Create([FromBody] TruckingCompany company)
+{
+    if (company == null)
+        return BadRequest("Trucking company object is null.");
  
+    if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+    // Check if a TruckingCompany with the same name already exists
+    var existingCompany = await _context.TruckingCompanies
+        .FirstOrDefaultAsync(tc => tc.Name == company.Name);
+
+    if (existingCompany != null)
+    {
+        return Conflict(new { message = "A TruckingCompany with the same name already exists." });
+    }
+
+    // Save trucking company and its trucks (if any)
+    _context.TruckingCompanies.Add(company);
+    await _context.SaveChangesAsync();
+
+    return CreatedAtAction(nameof(Get), new { id = company.Id }, company);
+}
+
+
         // PUT: api/TruckingCompany/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] TruckingCompany company)
@@ -70,7 +95,7 @@ namespace TruckingCompanyApi.Controllers
                 return NotFound();
  
             // Update existing company details
-            existingCompany.Name = company.Name;
+            // existingCompany.Name = company.Name;
             existingCompany.WorkType = company.WorkType;
             // Add or update other properties if needed
  
