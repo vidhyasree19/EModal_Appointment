@@ -24,7 +24,7 @@ namespace TruckingCompanyApi.Controllers
         public async Task<IActionResult> GetTrucks()
         {
             var trucks = await _context.Trucks
-                .Include(t => t.TruckingCompany)  // Eagerly load TruckingCompany
+                //.Include(t => t.TruckingCompany)  // Eagerly load TruckingCompany
                 .ToListAsync();
 
             return Ok(trucks);
