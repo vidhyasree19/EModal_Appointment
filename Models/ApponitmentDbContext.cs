@@ -20,10 +20,10 @@ namespace AppointmentApi.Data
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
        
-        modelBuilder.Entity<Truck>()
-            .HasOne(t => t.TruckingCompany)
-            .WithMany(tc => tc.Trucks)
-            .HasForeignKey(t => t.TruckingCompanyId);
+        // modelBuilder.Entity<Truck>()
+        //     .HasOne(t => t.TruckingCompany)
+        //     .WithMany(tc => tc.Trucks)
+        //     .HasForeignKey(t => t.TruckingCompanyId);
 
         // modelBuilder.Entity<Driver>()
         //     .HasOne(d => d.TruckingCompany)
