@@ -20,7 +20,7 @@ public class TruckingCompany
     public WorkType WorkType { get; set; }
 
     public ICollection<Truck> Trucks { get; set; } = new List<Truck>();
-   // public ICollection<Appointment> Appointments{get;set;}=new List<Appointment>();
+   public ICollection<Appointment> Appointments{get;set;}=new List<Appointment>();
 
 }
 
