@@ -120,7 +120,13 @@ namespace Appointment_Api.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("TruckId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TruckingCompanyId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -134,32 +140,26 @@ namespace Appointment_Api.Migrations
 
             modelBuilder.Entity("Truck", b =>
                 {
-                    b.HasOne("TruckingCompany", "TruckingCompany")
+                    b.HasOne("TruckingCompany", null)
                         .WithMany("Trucks")
                         .HasForeignKey("TruckingCompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("TruckingCompany");
                 });
 
             modelBuilder.Entity("TruckingCompanyApi.Models.Appointment", b =>
                 {
-                    b.HasOne("TermianlApi.Models.Terminal", "Terminal")
+                    b.HasOne("TermianlApi.Models.Terminal", null)
                         .WithMany("Appointments")
                         .HasForeignKey("TerminalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TruckingCompany", "TruckingCompany")
-                        .WithMany()
+                    b.HasOne("TruckingCompany", null)
+                        .WithMany("Appointments")
                         .HasForeignKey("TruckingCompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Terminal");
-
-                    b.Navigation("TruckingCompany");
                 });
 
             modelBuilder.Entity("TermianlApi.Models.Terminal", b =>
@@ -169,6 +169,8 @@ namespace Appointment_Api.Migrations
 
             modelBuilder.Entity("TruckingCompany", b =>
                 {
+                    b.Navigation("Appointments");
+
                     b.Navigation("Trucks");
                 });
 #pragma warning restore 612, 618
