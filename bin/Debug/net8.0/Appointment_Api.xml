@@ -40,5 +40,29 @@
         <member name="M:Appointment_Api.Migrations.MigrationName.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:Appointment_Api.Migrations.AppointmentsCreated">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.AppointmentsCreated.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.AppointmentsCreated.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.AppointmentsCreated.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:Appointment_Api.Migrations.truckmigrations">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.truckmigrations.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.truckmigrations.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.truckmigrations.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

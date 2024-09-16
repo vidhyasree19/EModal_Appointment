@@ -4332,19 +4332,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\VidhyaSreeChinthalap\\.nuget\\packages\\": {}
+    "C:\\Users\\PrashanthGanegoni\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\VidhyaSreeChinthalap\\Desktop\\Emodal Appointment\\Appointment_Api\\Appointment_Api.csproj",
+      "projectUniqueName": "D:\\appointment\\EModal_Appointment\\Appointment_Api.csproj",
       "projectName": "Appointment_Api",
-      "projectPath": "C:\\Users\\VidhyaSreeChinthalap\\Desktop\\Emodal Appointment\\Appointment_Api\\Appointment_Api.csproj",
-      "packagesPath": "C:\\Users\\VidhyaSreeChinthalap\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\VidhyaSreeChinthalap\\Desktop\\Emodal Appointment\\Appointment_Api\\obj\\",
+      "projectPath": "D:\\appointment\\EModal_Appointment\\Appointment_Api.csproj",
+      "packagesPath": "C:\\Users\\PrashanthGanegoni\\.nuget\\packages\\",
+      "outputPath": "D:\\appointment\\EModal_Appointment\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\VidhyaSreeChinthalap\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\PrashanthGanegoni\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
