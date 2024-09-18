@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Threading.Tasks;
 using TermianlApi.Models;
-using AppointmentApi.Data;
+using TermianlApi.Services;
+using System.Threading.Tasks;
 
 namespace TermianlApi.Controllers
 {
@@ -13,21 +12,21 @@ namespace TermianlApi.Controllers
     [Authorize(Roles = "operator")]
     public class TerminalController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ITerminalService _terminalService;
         private readonly ILogger<TerminalController> _logger;
 
-        public TerminalController(ApplicationDbContext context, ILogger<TerminalController> logger)
+        public TerminalController(ITerminalService terminalService, ILogger<TerminalController> logger)
         {
-            _context = context;
+            _terminalService = terminalService;
             _logger = logger;
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             try
             {
-                var terminals = _context.Terminals.ToList();
+                var terminals = await _terminalService.GetAll();
                 return Ok(terminals);
             }
             catch (Exception ex)
@@ -38,11 +37,11 @@ namespace TermianlApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var terminal = _context.Terminals.Find(id);
+                var terminal = await _terminalService.Get(id);
                 if (terminal == null)
                     return NotFound();
 
@@ -55,60 +54,48 @@ namespace TermianlApi.Controllers
             }
         }
 
-  [HttpPost]
-public IActionResult Create([FromBody] Terminal terminal)
-{
-    if (terminal == null)
-        return BadRequest("Terminal object is null.");
- 
-    if (!ModelState.IsValid)
-        return BadRequest("Invalid model object.");
- 
-    try
-    {
-        // Check if a terminal with the same unique attribute already exists
-        var existingTerminal = _context.Terminals
-            .FirstOrDefault(t => t.Name == terminal.Name ||  t.GateNo == terminal.GateNo); // Replace 'UniqueAttribute' with your actual unique field
- 
-        if (existingTerminal != null)
-            return Conflict("A terminal with the same name already exists."); // 409 Conflict status code
- 
-        // Add and save the new terminal
-        _context.Terminals.Add(terminal);
-        _context.SaveChanges();
-        return CreatedAtAction(nameof(Get), new { id = terminal.Id }, terminal);
-    }
-    catch (Exception ex)
-    {
-        _logger.LogError(ex, "An error occurred while creating the terminal.");
-        return StatusCode(500, "Internal server error.");
-    }
-}
- 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Terminal terminal)
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] Terminal terminal)
         {
-           if (terminal == null)
-        return BadRequest("Terminal object is null.");
- 
-    if (terminal.Id != id)
-        return BadRequest("Terminal ID mismatch.");
- 
-    if (!ModelState.IsValid)
-        return BadRequest("Invalid model object.");
+            if (terminal == null)
+                return BadRequest("Terminal object is null.");
+
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid model object.");
+
             try
             {
-                var existingTerminal = _context.Terminals.Find(id);
-                if (existingTerminal == null)
+                if (await _terminalService.TerminalExists(terminal.Name, terminal.GateNo))
+                    return Conflict("A terminal with the same name or gate number already exists.");
+
+                var createdTerminal = await _terminalService.Create(terminal);
+                return CreatedAtAction(nameof(Get), new { id = createdTerminal.Id }, createdTerminal);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating the terminal.");
+                return StatusCode(500, "Internal server error.");
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] Terminal terminal)
+        {
+            if (terminal == null)
+                return BadRequest("Terminal object is null.");
+
+            if (terminal.Id != id)
+                return BadRequest("Terminal ID mismatch.");
+
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid model object.");
+
+            try
+            {
+                var updated = await _terminalService.Update(id, terminal);
+                if (!updated)
                     return NotFound();
- 
-                // Update properties
-                existingTerminal.Slots = terminal.Slots;
-                existingTerminal.Amount = terminal.Amount;
- 
-                _context.Terminals.Update(existingTerminal);
-                _context.SaveChanges();
- 
+
                 return NoContent();
             }
             catch (Exception ex)
@@ -119,16 +106,13 @@ public IActionResult Create([FromBody] Terminal terminal)
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                var terminal = _context.Terminals.Find(id);
-                if (terminal == null)
+                var deleted = await _terminalService.Delete(id);
+                if (!deleted)
                     return NotFound();
-
-                _context.Terminals.Remove(terminal);
-                _context.SaveChanges();
 
                 return NoContent();
             }

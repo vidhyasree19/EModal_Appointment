@@ -1,56 +1,61 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using TruckingCompanyApi.Models;
-using AppointmentApi.Data;
-using Microsoft.AspNetCore.Authorization;
+using TruckingCompanyApi.Services;
 
 namespace TruckingCompanyApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "operator,admin")]
     public class AppointmentController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IAppointmentService _appointmentService;
+        private readonly ILogger<AppointmentController> _logger;
 
-        public AppointmentController(ApplicationDbContext context)
+        public AppointmentController(IAppointmentService appointmentService, ILogger<AppointmentController> logger)
         {
-            _context = context;
+            _appointmentService = appointmentService;
+            _logger = logger;
         }
 
-        // GET: api/Appointment
-        //[Authorize(Roles = "operator")]
+        [Authorize(Roles = "operator")]
         [HttpGet]
         public async Task<IActionResult> GetAppointments()
         {
-            var appointments = await _context.Appointments
-                // .Include(a => a.Terminal)
-                // .Include(a => a.TruckingCompany)
-                // .Include(a => a.Truck)
-                .ToListAsync();
-            return Ok(appointments);
+            try
+            {
+                var appointments = await _appointmentService.GetAppointments();
+                return Ok(appointments);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while retrieving appointments.");
+                return StatusCode(500, "Internal server error.");
+            }
         }
 
-        // GET: api/Appointment/5
-        //[Authorize(Roles = "operator")]
+        [Authorize(Roles = "operator")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAppointment(int id)
         {
-            var appointment = await _context.Appointments
-                // .Include(a => a.Terminal)
-                // .Include(a => a.TruckingCompany)
-                // .Include(a => a.Truck)
-                .FirstOrDefaultAsync(a => a.Id == id);
-
-            if (appointment == null)
+            try
             {
-                return NotFound();
-            }
+                var appointment = await _appointmentService.GetAppointment(id);
+                if (appointment == null)
+                    return NotFound();
 
-            return Ok(appointment);
+                return Ok(appointment);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while retrieving appointment with ID {id}.");
+                return StatusCode(500, "Internal server error.");
+            }
         }
 
-        // POST: api/Appointment
         //[Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<IActionResult> CreateAppointment([FromBody] Appointment appointment)
@@ -58,13 +63,18 @@ namespace TruckingCompanyApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            _context.Appointments.Add(appointment);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetAppointment), new { id = appointment.Id }, appointment);
+            try
+            {
+                var createdAppointment = await _appointmentService.CreateAppointment(appointment);
+                return CreatedAtAction(nameof(GetAppointment), new { id = createdAppointment.Id }, createdAppointment);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating the appointment.");
+                return StatusCode(500, "Internal server error.");
+            }
         }
 
-        // PUT: api/Appointment/5
         //[Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAppointment(int id, [FromBody] Appointment appointment)
@@ -72,38 +82,38 @@ namespace TruckingCompanyApi.Controllers
             if (id != appointment.Id)
                 return BadRequest();
 
-            _context.Entry(appointment).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.Appointments.Any(a => a.Id == id))
+                var updated = await _appointmentService.UpdateAppointment(id, appointment);
+                if (!updated)
                     return NotFound();
-                else
-                    throw;
-            }
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while updating appointment with ID {id}.");
+                return StatusCode(500, "Internal server error.");
+            }
         }
 
-        // DELETE: api/Appointment/5
-        //[Authorize(Roles = "operator")]
+        [Authorize(Roles = "operator")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAppointment(int id)
         {
-            var appointment = await _context.Appointments.FindAsync(id);
-            if (appointment == null)
+            try
             {
-                return NotFound();
+                var deleted = await _appointmentService.DeleteAppointment(id);
+                if (!deleted)
+                    return NotFound();
+
+                return NoContent();
             }
-
-            _context.Appointments.Remove(appointment);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while deleting appointment with ID {id}.");
+                return StatusCode(500, "Internal server error.");
+            }
         }
     }
 }
