@@ -8,9 +8,7 @@ public class Truck
     public int TruckingCompanyId { get; set; }
     public string DriverName { get; set; }
 
-    // Navigation property (if needed)
-   // public TruckingCompany TruckingCompany { get; set; }
-   // public ICollection<Appointment> Appointments{get;set;}=new List<Appointment>();
+
 
 }
 

@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TruckingCompanyApi.Models;
-using AppointmentApi.Data;
- 
+using TruckingCompanyApi.Services;
+using System.Threading.Tasks;
+
 namespace TruckingCompanyApi.Controllers
 {
     [ApiController]
@@ -11,77 +11,51 @@ namespace TruckingCompanyApi.Controllers
     [Authorize(Roles = "Admin")]
     public class TruckingCompanyController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
- 
-        public TruckingCompanyController(ApplicationDbContext context)
+        private readonly ITruckingCompanyService _truckingCompanyService;
+
+        public TruckingCompanyController(ITruckingCompanyService truckingCompanyService)
         {
-            _context = context;
+            _truckingCompanyService = truckingCompanyService;
         }
- 
+
         // GET: api/TruckingCompany
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var companies = await _context.TruckingCompanies
-              .Include(tc => tc.Trucks) // Optionally include related trucks if needed
-                .ToListAsync();
+            var companies = await _truckingCompanyService.GetAll();
             return Ok(companies);
         }
- 
+
         // GET: api/TruckingCompany/5
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var company = await _context.TruckingCompanies
-              .Include(tc => tc.Trucks) // Optionally include related trucks if needed
-                .FirstOrDefaultAsync(tc => tc.Id == id);
- 
+            var company = await _truckingCompanyService.Get(id);
             if (company == null)
                 return NotFound();
- 
+
             return Ok(company);
         }
- 
+
         // POST: api/TruckingCompany
-        // [HttpPost]
-        // public async Task<IActionResult> Create([FromBody] TruckingCompany company)
-        // {
-        //     if (company == null)
-        //         return BadRequest("TruckingCompany cannot be null.");
- 
-        //     if (!ModelState.IsValid)
-        //         return BadRequest(ModelState);
- 
-        //     _context.TruckingCompanies.Add(company);
-        //     await _context.SaveChangesAsync();
- 
-        //     return CreatedAtAction(nameof(Get), new { id = company.Id }, company);
-        // }
- [HttpPost]
-public async Task<IActionResult> Create([FromBody] TruckingCompany company)
-{
-    if (company == null)
-        return BadRequest("Trucking company object is null.");
- 
-    if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] TruckingCompany company)
+        {
+            if (company == null)
+                return BadRequest("Trucking company object is null.");
 
-    // Check if a TruckingCompany with the same name already exists
-    var existingCompany = await _context.TruckingCompanies
-        .FirstOrDefaultAsync(tc => tc.Name == company.Name);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-    if (existingCompany != null)
-    {
-        return Conflict(new { message = "A TruckingCompany with the same name already exists." });
-    }
+            if (await _truckingCompanyService.TruckingCompanyExists(company.Name))
+            {
+                return Conflict(new { message = "A TruckingCompany with the same name already exists." });
+            }
 
-    // Save trucking company and its trucks (if any)
-    _context.TruckingCompanies.Add(company);
-    await _context.SaveChangesAsync();
+            var createdCompany = await _truckingCompanyService.Create(company);
 
-    return CreatedAtAction(nameof(Get), new { id = company.Id }, company);
-}
-
+            return CreatedAtAction(nameof(Get), new { id = createdCompany.Id }, createdCompany);
+        }
 
         // PUT: api/TruckingCompany/5
         [HttpPut("{id}")]
@@ -89,33 +63,22 @@ public async Task<IActionResult> Create([FromBody] TruckingCompany company)
         {
             if (company == null || company.Id != id)
                 return BadRequest();
- 
-            var existingCompany = await _context.TruckingCompanies.FindAsync(id);
-            if (existingCompany == null)
+
+            var updated = await _truckingCompanyService.Update(id, company);
+            if (!updated)
                 return NotFound();
- 
-            // Update existing company details
-            // existingCompany.Name = company.Name;
-            existingCompany.WorkType = company.WorkType;
-            // Add or update other properties if needed
- 
-            _context.TruckingCompanies.Update(existingCompany);
-            await _context.SaveChangesAsync();
- 
-            return NoContent();
+
+            return Ok("Trucking company updated successfully.");
         }
- 
+
         // DELETE: api/TruckingCompany/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var company = await _context.TruckingCompanies.FindAsync(id);
-            if (company == null)
+            var deleted = await _truckingCompanyService.Delete(id);
+            if (!deleted)
                 return NotFound();
- 
-            _context.TruckingCompanies.Remove(company);
-            await _context.SaveChangesAsync();
- 
+
             return NoContent();
         }
     }
