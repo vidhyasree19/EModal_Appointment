@@ -1,3 +1,4 @@
+using AuthlApi.Models;
 public interface IAuthService
 {
     Task<bool> Register(AuthModel model);

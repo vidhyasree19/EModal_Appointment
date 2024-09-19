@@ -16,5 +16,17 @@
         <member name="M:Appointment_Api.Migrations.migrationsappointment.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:Appointment_Api.Migrations.AuthService">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.AuthService.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.AuthService.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.AuthService.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

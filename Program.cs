@@ -7,7 +7,7 @@ using TruckingCompanyApi.Models;
 using AppointmentApi.Data;
 using System.Text.Json.Serialization;
 using TruckingCompanyApi.Services;
-using TermianlApi.Services; // Add this to use the service
+using TermianlApi.Services;  // Adjusted to use the correct namespace for TerminalService
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,14 +18,16 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
     });
 
+// Configure the database context with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Register TruckService for dependency injection
-builder.Services.AddScoped<ITruckService, TruckService>(); // Register TruckService
+// Register application services for dependency injection
+builder.Services.AddScoped<ITruckService, TruckService>();
 builder.Services.AddScoped<ITruckingCompanyService, TruckingCompanyService>();
 builder.Services.AddScoped<ITerminalService, TerminalService>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+builder.Services.AddScoped<IAuthService, AuthService>(); // Ensure AuthService is registered
 
 // Configure JWT authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -48,7 +50,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 
-    // Optionally, include XML comments if you have them
+    // Include XML comments if available
     var xmlFile = $"{AppDomain.CurrentDomain.FriendlyName}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
@@ -60,15 +62,15 @@ var app = builder.Build();
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Enable Swagger and Swagger UI
 app.UseSwagger();
-
-// Enable middleware to serve Swagger UI, specifying the Swagger JSON endpoint.
 app.UseSwaggerUI(c =>
 {
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
     c.RoutePrefix = string.Empty; // Set Swagger UI at the app's root
 });
 
+// Map controller endpoints
 app.MapControllers();
 
 app.Run();
