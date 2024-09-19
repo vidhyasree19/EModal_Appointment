@@ -88,7 +88,7 @@ namespace TruckingCompanyApi.Controllers
                 if (!updated)
                     return NotFound();
 
-                return NoContent();
+                 return Ok("Appointment has been successfully updated.");
             }
             catch (Exception ex)
             {
@@ -107,7 +107,7 @@ namespace TruckingCompanyApi.Controllers
                 if (!deleted)
                     return NotFound();
 
-                return NoContent();
+                 return Ok("Appointment has been successfully deleted.");
             }
             catch (Exception ex)
             {
