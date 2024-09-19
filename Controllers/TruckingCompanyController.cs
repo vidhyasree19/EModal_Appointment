@@ -62,8 +62,10 @@ namespace TruckingCompanyApi.Controllers
         public async Task<IActionResult> Update(int id, [FromBody] TruckingCompany company)
         {
             if (company == null || company.Id != id)
-                return BadRequest();
-
+            {
+            var m ="enter correct id";
+                return BadRequest(m);
+            }
             var updated = await _truckingCompanyService.Update(id, company);
             if (!updated)
                 return NotFound();

@@ -9,7 +9,7 @@ namespace TruckingCompanyApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "operator,admin")]
+    [Authorize(Roles = "Operator,Admin")]
     public class AppointmentController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
@@ -21,7 +21,7 @@ namespace TruckingCompanyApi.Controllers
             _logger = logger;
         }
 
-        [Authorize(Roles = "operator")]
+        [Authorize(Roles = "Operator")]
         [HttpGet]
         public async Task<IActionResult> GetAppointments()
         {
@@ -56,7 +56,7 @@ namespace TruckingCompanyApi.Controllers
             }
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateAppointment([FromBody] Appointment appointment)
         {
@@ -75,7 +75,7 @@ namespace TruckingCompanyApi.Controllers
             }
         }
 
-        //[Authorize(Roles = "admin")]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAppointment(int id, [FromBody] Appointment appointment)
         {
@@ -97,7 +97,7 @@ namespace TruckingCompanyApi.Controllers
             }
         }
 
-        [Authorize(Roles = "operator")]
+        [Authorize(Roles = "Operator")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAppointment(int id)
         {
