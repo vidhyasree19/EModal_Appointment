@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using AppointmentApi.Data;
 using TruckingCompanyApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using AuthlApi.Models;
 
 
 
@@ -36,7 +37,7 @@ public class AuthService : IAuthService
             Password = HashPassword(model.Password),
             Role = model.Role // Store role in the User entity
         };
-        
+
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
         return true;
@@ -91,50 +92,8 @@ public class AuthService : IAuthService
         // Implement password verification
         return inputPassword == storedPassword; // Replace with actual verification logic
     }
+
+  
 }
 
 
-namespace TruckingCompanyApi.Controllers
-{
-    [ApiController]
-    [Route("api/[controller]")]
-    public class AuthController : ControllerBase
-    {
-        private readonly IAuthService _authService;
-
-        public AuthController(IAuthService authService)
-        {
-            _authService = authService;
-        }
-
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] AuthModel model)
-        {
-            var result = await _authService.Register(model);
-            if (!result)
-            {
-                return BadRequest("User already exists.");
-            }
-            return Ok("User registered successfully.");
-        }
-
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] AuthModel model)
-        {
-            var token = await _authService.Login(model);
-            if (token == null)
-            {
-                return Unauthorized();
-            }
-            return Ok(new { Token = token });
-        }
-
-        // Optional: Endpoint to get user roles
-        [HttpGet("roles/{username}")]
-        public async Task<IActionResult> GetUserRoles(string username)
-        {
-            var roles = await _authService.GetUserRoles(username);
-            return Ok(roles);
-        }
-    }
-}

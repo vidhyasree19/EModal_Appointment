@@ -1,62 +1,64 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using System.Threading.Tasks;
+using AuthlApi.Models;
 
-namespace TruckingCompanyApi.Controllers
+namespace AuthlApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
+        private readonly IAuthService _authService;
+
+        public AuthController(IAuthService authService)
+        {
+            _authService = authService;
+        }
+
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] AuthModel model)
+        {
+            if (model == null || string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password))
+            {
+                return BadRequest("Invalid user data.");
+            }
+
+            var result = await _authService.Register(model);
+            if (!result)
+            {
+                return Conflict("Username already exists.");
+            }
+
+            return Ok("User registered successfully.");
+        }
+
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginModel model)
+        public async Task<IActionResult> Login([FromBody] AuthModel model)
         {
-            // Example user validation logic - replace with actual user validation
-            if (model.Username == "admin" && model.Password == "password")
+            if (model == null || string.IsNullOrEmpty(model.Username) || string.IsNullOrEmpty(model.Password))
             {
-                var claims = new[]
-                {
-                    new Claim(ClaimTypes.Name, model.Username),
-                    new Claim(ClaimTypes.Role, "Admin")
-                };
-
-                return GenerateToken(claims);
-            }
-            else if (model.Username == "operator" && model.Password == "password")
-            {
-                var claims = new[]
-                {
-                    new Claim(ClaimTypes.Name, model.Username),
-                    new Claim(ClaimTypes.Role, "operator")
-                };
-
-                return GenerateToken(claims);
+                return BadRequest("Invalid login data.");
             }
 
-            return Unauthorized();
+            var token = await _authService.Login(model);
+            if (string.IsNullOrEmpty(token))
+            {
+                return Unauthorized("Invalid username or password.");
+            }
+
+            return Ok(new { Token = token });
         }
 
-        private IActionResult GenerateToken(Claim[] claims)
+        [HttpGet("roles/{username}")]
+        public async Task<IActionResult> GetUserRoles(string username)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("qwertyuiopasdfghjklzxcvbnm123456fvyhijlxspias98uxincokwi9cujnc"));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            if (string.IsNullOrEmpty(username))
+            {
+                return BadRequest("Username is required.");
+            }
 
-            var token = new JwtSecurityToken(
-                issuer: "http://localhost:5000",
-                audience: "http://localhost:5000",
-                claims: claims,
-                expires: DateTime.UtcNow.AddHours(1),
-                signingCredentials: creds);
-
-            return Ok(new { Token = new JwtSecurityTokenHandler().WriteToken(token) });
+            var roles = await _authService.GetUserRoles(username);
+            return Ok(roles);
         }
-    }
-
-    public class LoginModel
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
     }
 }

@@ -14,42 +14,32 @@ namespace AppointmentApi.Data
         public DbSet<TruckingCompany> TruckingCompanies { get; set; }
         public DbSet<Terminal> Terminals { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
-         public DbSet<Truck> Trucks { get; set; }
-    // public DbSet<Driver> Drivers { get; set; }
+        public DbSet<Truck> Trucks { get; set; }
+        public DbSet<User> Users { get; set; } // Add this line for User entity
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-       
-        // modelBuilder.Entity<Truck>()
-        //     .HasOne(t => t.TruckingCompany)
-        //     .WithMany(tc => tc.Trucks)
-        //     .HasForeignKey(t => t.TruckingCompanyId);
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // Define relationships as necessary
 
-        // modelBuilder.Entity<Driver>()
-        //     .HasOne(d => d.TruckingCompany)
-        //     .WithMany(tc => tc.Drivers)
-        //     .HasForeignKey(d => d.TruckingCompanyId);
-    //     modelBuilder.Entity<Appointment>()
-    //     .HasOne(a => a.Truck)
-    //     .WithMany()
-    //     .HasForeignKey(a => a.TruckId)
-    //     .OnDelete(DeleteBehavior.Restrict);
+            // Uncomment and adjust these if needed
+            // modelBuilder.Entity<Truck>()
+            //     .HasOne(t => t.TruckingCompany)
+            //     .WithMany(tc => tc.Trucks)
+            //     .HasForeignKey(t => t.TruckingCompanyId);
 
-    // // Appointment -> TruckingCompany relationship (Restrict cascading)
-    // modelBuilder.Entity<Appointment>()
-    //     .HasOne(a => a.TruckingCompany)
-    //     .WithMany()
-    //     .HasForeignKey(a => a.TruckingCompanyId)
-    //     .OnDelete(DeleteBehavior.Restrict);
+            // modelBuilder.Entity<Driver>()
+            //     .HasOne(d => d.TruckingCompany)
+            //     .WithMany(tc => tc.Drivers)
+            //     .HasForeignKey(d => d.TruckingCompanyId);
 
-    // // Appointment -> Terminal relationship (Restrict cascading)
-    // modelBuilder.Entity<Appointment>()
-    //     .HasOne(a => a.Terminal)
-    //     .WithMany()
-    //     .HasForeignKey(a => a.TerminalId)
-    //     .OnDelete(DeleteBehavior.Restrict);
-    //     base.OnModelCreating(modelBuilder);
+            // modelBuilder.Entity<Appointment>()
+            //     .HasOne(a => a.Truck)
+            //     .WithMany()
+            //     .HasForeignKey(a => a.TruckId)
+            //     .OnDelete(DeleteBehavior.Restrict);
+        }
     }
 
-    }
+    // Add User model to represent users in the database
+   
 }

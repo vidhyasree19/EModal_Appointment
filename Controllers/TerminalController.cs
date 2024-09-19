@@ -9,7 +9,7 @@ namespace TermianlApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "operator")]
+    [Authorize(Roles = "Operator")]
     public class TerminalController : ControllerBase
     {
         private readonly ITerminalService _terminalService;
@@ -21,7 +21,9 @@ namespace TermianlApi.Controllers
             _logger = logger;
         }
 
+
         [HttpGet]
+       
         public async Task<IActionResult> GetAll()
         {
             try
