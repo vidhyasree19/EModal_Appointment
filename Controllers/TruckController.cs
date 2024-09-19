@@ -55,7 +55,7 @@ namespace TruckingCompanyApi.Controllers
             }
 
             await _truckService.UpdateTruckAsync(id, truck);
-            return NoContent();
+            return Ok("Truck has been successfully updated.");
         }
 
         // DELETE: api/Truck/5
@@ -69,7 +69,7 @@ namespace TruckingCompanyApi.Controllers
             }
 
             await _truckService.DeleteTruckAsync(id);
-            return NoContent();
+             return Ok("Truck has been successfully deleted.");
         }
     }
 }

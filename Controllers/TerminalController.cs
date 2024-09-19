@@ -96,7 +96,7 @@ namespace TermianlApi.Controllers
                 if (!updated)
                     return NotFound();
 
-                return NoContent();
+                 return Ok("Terminal has been successfully updated.");
             }
             catch (Exception ex)
             {
@@ -114,7 +114,7 @@ namespace TermianlApi.Controllers
                 if (!deleted)
                     return NotFound();
 
-                return NoContent();
+                 return Ok("Terminal has been successfully deleted.");
             }
             catch (Exception ex)
             {

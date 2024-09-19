@@ -79,7 +79,8 @@ namespace TruckingCompanyApi.Controllers
             if (!deleted)
                 return NotFound();
 
-            return NoContent();
+             return Ok("Trucking company has been deleted successfully .");
+
         }
     }
 }
