@@ -10,12 +10,12 @@ namespace TruckingCompanyApi.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(Roles = "Operator,Admin")]
-    public class AppointmentController : ControllerBase
+    public class AppointmentsController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
-        private readonly ILogger<AppointmentController> _logger;
+        private readonly ILogger<AppointmentsController> _logger;
 
-        public AppointmentController(IAppointmentService appointmentService, ILogger<AppointmentController> logger)
+        public AppointmentsController(IAppointmentService appointmentService, ILogger<AppointmentsController> logger)
         {
             _appointmentService = appointmentService;
             _logger = logger;
@@ -37,7 +37,7 @@ namespace TruckingCompanyApi.Controllers
             }
         }
 
-        [Authorize(Roles = "operator")]
+        [Authorize(Roles = "Operator")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAppointment(int id)
         {
@@ -45,7 +45,10 @@ namespace TruckingCompanyApi.Controllers
             {
                 var appointment = await _appointmentService.GetAppointment(id);
                 if (appointment == null)
+                    {
+                    _logger.LogError( $"Appointment with ID {id} not found");
                     return NotFound();
+                }
 
                 return Ok(appointment);
             }
@@ -58,35 +61,49 @@ namespace TruckingCompanyApi.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateAppointment([FromBody] Appointment appointment)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+public async Task<IActionResult> CreateAppointment([FromBody] Appointment appointment)
+{
+    if (!ModelState.IsValid)
+    {
+        _logger.LogError("Model state is invalid. Appointment");
+        return BadRequest(ModelState);
+    }
 
-            try
-            {
-                var createdAppointment = await _appointmentService.CreateAppointment(appointment);
-                return CreatedAtAction(nameof(GetAppointment), new { id = createdAppointment.Id }, createdAppointment);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "An error occurred while creating the appointment.");
-                return StatusCode(500, "Internal server error.");
-            }
-        }
+    try
+    {
+        var createdAppointment = await _appointmentService.CreateAppointment(appointment);
+        return CreatedAtAction(nameof(GetAppointment), new { id = createdAppointment.Id }, createdAppointment);
+    }
+    catch (InvalidOperationException ex)
+    {
+        _logger.LogError(ex, "Invalid appointment data.");
+        return BadRequest(new { message = ex.Message });
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "An error occurred while creating the appointment.");
+        return StatusCode(500, "Internal server error.");
+    }
+}
+
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAppointment(int id, [FromBody] Appointment appointment)
         {
             if (id != appointment.Id)
-                return BadRequest();
+               {
+                _logger.LogError("Appointment object is null or ID mismatch.");
+                return BadRequest();}
 
             try
             {
                 var updated = await _appointmentService.UpdateAppointment(id, appointment);
                 if (!updated)
+                   {
+                    _logger.LogWarning($"Appointmetn with ID {id} not found for update.");
                     return NotFound();
+                    }
 
                  return Ok("Appointment has been successfully updated.");
             }
@@ -105,7 +122,12 @@ namespace TruckingCompanyApi.Controllers
             {
                 var deleted = await _appointmentService.DeleteAppointment(id);
                 if (!deleted)
+                 {
+
+                       _logger.LogWarning($"Appointment with ID {id} not found for deletion.");
                     return NotFound();
+                    }
+
 
                  return Ok("Appointment has been successfully deleted.");
             }

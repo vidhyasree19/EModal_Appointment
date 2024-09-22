@@ -1,0 +1,271 @@
+2024-09-20 09:54:26,887  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (4ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (DbType = Boolean), @p2='?' (Size = 4000), @p3='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Trucks] ([DriverName], [IsChasis], [TruckNo], [TruckingCompanyId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3);
+ 2024-09-20 09:54:26,907 ERROR Microsoft.EntityFrameworkCore.Update.? [(null)] [?] - MESSAGE: An exception occurred in the database while saving changes for context type 'AppointmentApi.Data.ApplicationDbContext'.
+Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Trucks_TruckingCompanies_TruckingCompanyId". The conflict occurred in database "Appointment", table "dbo.TruckingCompanies", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:b6a0f31a-67a0-4b23-adf5-ac9760ee4149
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+ Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Trucks_TruckingCompanies_TruckingCompanyId". The conflict occurred in database "Appointment", table "dbo.TruckingCompanies", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:b6a0f31a-67a0-4b23-adf5-ac9760ee4149
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+2024-09-20 09:54:26,939 ERROR Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddleware.? [(null)] [?] - MESSAGE: An unhandled exception has occurred while executing the request.
+ Microsoft.EntityFrameworkCore.DbUpdateException: An error occurred while saving the entity changes. See the inner exception for details.
+ ---> Microsoft.Data.SqlClient.SqlException (0x80131904): The INSERT statement conflicted with the FOREIGN KEY constraint "FK_Trucks_TruckingCompanies_TruckingCompanyId". The conflict occurred in database "Appointment", table "dbo.TruckingCompanies", column 'Id'.
+   at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at Microsoft.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryHasMoreRows(Boolean& moreRows)
+   at Microsoft.Data.SqlClient.SqlDataReader.TryReadInternal(Boolean setTimeout, Boolean& more)
+   at Microsoft.Data.SqlClient.SqlDataReader.ReadAsyncExecute(Task task, Object state)
+   at Microsoft.Data.SqlClient.SqlDataReader.InvokeAsyncCall[T](SqlDataReaderBaseAsyncCallContext`1 context)
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+ClientConnectionId:b6a0f31a-67a0-4b23-adf5-ac9760ee4149
+Error Number:547,State:0,Class:16
+   --- End of inner exception stack trace ---
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeResultSetAsync(Int32 startCommandIndex, RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.AffectedCountModificationCommandBatch.ConsumeAsync(RelationalDataReader reader, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.ReaderModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Update.Internal.SqlServerModificationCommandBatch.ExecuteAsync(IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Update.Internal.BatchExecutor.ExecuteAsync(IEnumerable`1 commandBatches, IRelationalConnection connection, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(IList`1 entriesToSave, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.ChangeTracking.Internal.StateManager.SaveChangesAsync(StateManager stateManager, Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal.SqlServerExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.DbContext.SaveChangesAsync(Boolean acceptAllChangesOnSuccess, CancellationToken cancellationToken)
+   at TruckingCompanyApi.Services.TruckService.CreateTruckAsync(Truck truck) in C:\Users\VinayKumarAndala\source\repos\EModal_Appointment\Services\TruckService.cs:line 32
+   at TruckingCompanyApi.Controllers.TruckController.CreateTruck(Truck truck) in C:\Users\VinayKumarAndala\source\repos\EModal_Appointment\Controllers\TruckController.cs:line 53
+   at lambda_method233(Closure, Object)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.AwaitableObjectResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2024-09-20 09:55:01,638  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (5ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[WorkType], [t0].[Id], [t0].[DriverName], [t0].[IsChasis], [t0].[TruckNo], [t0].[TruckingCompanyId]
+FROM [TruckingCompanies] AS [t]
+LEFT JOIN [Trucks] AS [t0] ON [t].[Id] = [t0].[TruckingCompanyId]
+ORDER BY [t].[Id]
+ 2024-09-20 09:55:39,103  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (6ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (DbType = Boolean), @p2='?' (Size = 4000), @p3='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Trucks] ([DriverName], [IsChasis], [TruckNo], [TruckingCompanyId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3);
+ 2024-09-20 09:56:20,219  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (13ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (Size = 4000), @p2='?' (DbType = Int32), @p3='?' (Size = 4000), @p4='?' (DbType = Int32), @p5='?' (DbType = Int32), @p6='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Appointments] ([AppointmentDate], [ContainerNumber], [TerminalId], [TicketNumber], [TruckId], [TruckingCompanyId], [WorkType])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+ 2024-09-20 09:58:45,296  INFO Microsoft.Hosting.Lifetime.Invoke [(null)] [0] - MESSAGE: Application is shutting down...
+ 2024-09-20 15:37:11,290  INFO Microsoft.Hosting.Lifetime.? [(null)] [?] - MESSAGE: Now listening on: http://localhost:5220
+ 2024-09-20 15:37:11,321  INFO Microsoft.Hosting.Lifetime.OnApplicationStarted [(null)] [0] - MESSAGE: Application started. Press Ctrl+C to shut down.
+ 2024-09-20 15:37:11,323  INFO Microsoft.Hosting.Lifetime.OnApplicationStarted [(null)] [0] - MESSAGE: Hosting environment: Development
+ 2024-09-20 15:37:11,324  INFO Microsoft.Hosting.Lifetime.Invoke [(null)] [0] - MESSAGE: Content root path: C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment
+ 2024-09-20 15:38:56,823  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (91ms) [Parameters=[@__model_Username_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Password], [u].[Role], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__model_Username_0
+ 2024-09-20 15:49:49,062  INFO Microsoft.Hosting.Lifetime.Invoke [(null)] [0] - MESSAGE: Application is shutting down...
+ 2024-09-20 15:49:53,457  INFO Microsoft.Hosting.Lifetime.? [(null)] [?] - MESSAGE: Now listening on: http://localhost:5220
+ 2024-09-20 15:49:53,487  INFO Microsoft.Hosting.Lifetime.OnApplicationStarted [(null)] [0] - MESSAGE: Application started. Press Ctrl+C to shut down.
+ 2024-09-20 15:49:53,489  INFO Microsoft.Hosting.Lifetime.OnApplicationStarted [(null)] [0] - MESSAGE: Hosting environment: Development
+ 2024-09-20 15:49:53,490  INFO Microsoft.Hosting.Lifetime.Invoke [(null)] [0] - MESSAGE: Content root path: C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment
+ 2024-09-20 15:50:11,184  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (56ms) [Parameters=[@__model_Username_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[Username] = @__model_Username_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+ 2024-09-20 15:50:16,693  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (31ms) [Parameters=[@__model_Username_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Password], [u].[Role], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__model_Username_0
+ 2024-09-20 15:51:03,620  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (18ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[Name], [t].[WorkType]
+FROM [TruckingCompanies] AS [t]
+WHERE [t].[Id] = @__p_0
+ 2024-09-20 15:51:03,624  WARN TruckingCompanyApi.Controllers.TruckingCompanyController.MoveNext [(null)] [100] - MESSAGE: Trucking company with ID 5 not found for deletion.
+ 2024-09-20 17:43:58,049  INFO Microsoft.Hosting.Lifetime.? [(null)] [?] - MESSAGE: Now listening on: http://localhost:5220
+ 2024-09-20 17:43:58,074  INFO Microsoft.Hosting.Lifetime.OnApplicationStarted [(null)] [0] - MESSAGE: Application started. Press Ctrl+C to shut down.
+ 2024-09-20 17:43:58,076  INFO Microsoft.Hosting.Lifetime.OnApplicationStarted [(null)] [0] - MESSAGE: Hosting environment: Development
+ 2024-09-20 17:43:58,076  INFO Microsoft.Hosting.Lifetime.Invoke [(null)] [0] - MESSAGE: Content root path: C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment
+ 2024-09-20 17:44:13,288  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (57ms) [Parameters=[@__model_Username_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Password], [u].[Role], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__model_Username_0
+ 2024-09-20 17:44:26,538  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[WorkType], [t0].[Id], [t0].[DriverName], [t0].[IsChasis], [t0].[TruckNo], [t0].[TruckingCompanyId]
+FROM [TruckingCompanies] AS [t]
+LEFT JOIN [Trucks] AS [t0] ON [t].[Id] = [t0].[TruckingCompanyId]
+ORDER BY [t].[Id]
+ 2024-09-20 17:44:55,703  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[DriverName], [t].[IsChasis], [t].[TruckNo], [t].[TruckingCompanyId]
+FROM [Trucks] AS [t]
+ 2024-09-20 17:45:52,991 ERROR TruckingCompanyApi.Controllers.AppointmentsController.MoveNext [(null)] [74] - MESSAGE: An error occurred while creating the appointment.
+ System.NullReferenceException: Object reference not set to an instance of an object.
+   at TruckingCompanyApi.Services.AppointmentService.CreateAppointment(Appointment appointment) in C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment\Services\AppointmentService.cs:line 34
+   at TruckingCompanyApi.Controllers.AppointmentsController.CreateAppointment(Appointment appointment) in C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment\Controllers\AppointmentController.cs:line 74
+2024-09-20 17:46:07,141 ERROR TruckingCompanyApi.Controllers.AppointmentsController.MoveNext [(null)] [74] - MESSAGE: An error occurred while creating the appointment.
+ System.NullReferenceException: Object reference not set to an instance of an object.
+   at TruckingCompanyApi.Services.AppointmentService.CreateAppointment(Appointment appointment) in C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment\Services\AppointmentService.cs:line 34
+   at TruckingCompanyApi.Controllers.AppointmentsController.CreateAppointment(Appointment appointment) in C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment\Controllers\AppointmentController.cs:line 74
+2024-09-20 17:48:20,235  INFO Microsoft.Hosting.Lifetime.Invoke [(null)] [0] - MESSAGE: Application is shutting down...
+ 2024-09-20 17:48:23,899  INFO Microsoft.Hosting.Lifetime.? [(null)] [?] - MESSAGE: Now listening on: http://localhost:5220
+ 2024-09-20 17:48:23,926  INFO Microsoft.Hosting.Lifetime.OnApplicationStarted [(null)] [0] - MESSAGE: Application started. Press Ctrl+C to shut down.
+ 2024-09-20 17:48:23,928  INFO Microsoft.Hosting.Lifetime.OnApplicationStarted [(null)] [0] - MESSAGE: Hosting environment: Development
+ 2024-09-20 17:48:23,929  INFO Microsoft.Hosting.Lifetime.Invoke [(null)] [0] - MESSAGE: Content root path: C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment
+ 2024-09-20 17:48:33,766  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (43ms) [Parameters=[@__model_Username_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Password], [u].[Role], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__model_Username_0
+ 2024-09-20 17:48:49,679 ERROR TruckingCompanyApi.Controllers.AppointmentsController.MoveNext [(null)] [74] - MESSAGE: An error occurred while creating the appointment.
+ System.NullReferenceException: Object reference not set to an instance of an object.
+   at TruckingCompanyApi.Services.AppointmentService.CreateAppointment(Appointment appointment) in C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment\Services\AppointmentService.cs:line 39
+   at TruckingCompanyApi.Controllers.AppointmentsController.CreateAppointment(Appointment appointment) in C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment\Controllers\AppointmentController.cs:line 74
+2024-09-20 17:51:33,149  INFO Microsoft.Hosting.Lifetime.Invoke [(null)] [0] - MESSAGE: Application is shutting down...
+ 2024-09-20 17:51:36,874  INFO Microsoft.Hosting.Lifetime.? [(null)] [?] - MESSAGE: Now listening on: http://localhost:5220
+ 2024-09-20 17:51:36,900  INFO Microsoft.Hosting.Lifetime.OnApplicationStarted [(null)] [0] - MESSAGE: Application started. Press Ctrl+C to shut down.
+ 2024-09-20 17:51:36,903  INFO Microsoft.Hosting.Lifetime.OnApplicationStarted [(null)] [0] - MESSAGE: Hosting environment: Development
+ 2024-09-20 17:51:36,904  INFO Microsoft.Hosting.Lifetime.Invoke [(null)] [0] - MESSAGE: Content root path: C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment
+ 2024-09-20 17:51:51,770  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (49ms) [Parameters=[@__model_Username_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Password], [u].[Role], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__model_Username_0
+ 2024-09-20 17:52:12,997  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (3ms) [Parameters=[@__name_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [TruckingCompanies] AS [t]
+        WHERE [t].[Name] = @__name_0) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+ 2024-09-20 17:52:13,147  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (3ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [TruckingCompanies] ([Name], [WorkType])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1);
+ 2024-09-20 17:52:31,490  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (16ms) [Parameters=[@p0='?' (Size = 4000), @p1='?' (DbType = Boolean), @p2='?' (Size = 4000), @p3='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Trucks] ([DriverName], [IsChasis], [TruckNo], [TruckingCompanyId])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3);
+ 2024-09-20 17:52:46,002  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [t].[Id], [t].[Name], [t].[WorkType], [t0].[Id], [t0].[DriverName], [t0].[IsChasis], [t0].[TruckNo], [t0].[TruckingCompanyId]
+FROM [TruckingCompanies] AS [t]
+LEFT JOIN [Trucks] AS [t0] ON [t].[Id] = [t0].[TruckingCompanyId]
+ORDER BY [t].[Id]
+ 2024-09-20 17:53:10,529 ERROR TruckingCompanyApi.Controllers.AppointmentsController.MoveNext [(null)] [74] - MESSAGE: An error occurred while creating the appointment.
+ System.NullReferenceException: Object reference not set to an instance of an object.
+   at TruckingCompanyApi.Services.AppointmentService.CreateAppointment(Appointment appointment) in C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment\Services\AppointmentService.cs:line 45
+   at TruckingCompanyApi.Controllers.AppointmentsController.CreateAppointment(Appointment appointment) in C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment\Controllers\AppointmentController.cs:line 74
+2024-09-20 17:54:26,072 ERROR TruckingCompanyApi.Controllers.AppointmentsController.MoveNext [(null)] [74] - MESSAGE: An error occurred while creating the appointment.
+ System.NullReferenceException: Object reference not set to an instance of an object.
+   at TruckingCompanyApi.Services.AppointmentService.CreateAppointment(Appointment appointment) in C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment\Services\AppointmentService.cs:line 45
+   at TruckingCompanyApi.Controllers.AppointmentsController.CreateAppointment(Appointment appointment) in C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment\Controllers\AppointmentController.cs:line 74
+2024-09-20 17:56:21,203  INFO Microsoft.Hosting.Lifetime.Invoke [(null)] [0] - MESSAGE: Application is shutting down...
+ 2024-09-20 18:03:41,673  INFO Microsoft.Hosting.Lifetime.? [(null)] [?] - MESSAGE: Now listening on: http://localhost:5220
+ 2024-09-20 18:03:41,697  INFO Microsoft.Hosting.Lifetime.OnApplicationStarted [(null)] [0] - MESSAGE: Application started. Press Ctrl+C to shut down.
+ 2024-09-20 18:03:41,699  INFO Microsoft.Hosting.Lifetime.OnApplicationStarted [(null)] [0] - MESSAGE: Hosting environment: Development
+ 2024-09-20 18:03:41,700  INFO Microsoft.Hosting.Lifetime.Invoke [(null)] [0] - MESSAGE: Content root path: C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment
+ 2024-09-20 18:03:53,200  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (38ms) [Parameters=[@__model_Username_0='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [u].[Id], [u].[Password], [u].[Role], [u].[Username]
+FROM [Users] AS [u]
+WHERE [u].[Username] = @__model_Username_0
+ 2024-09-20 18:04:20,588  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (5ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[DriverName], [t].[IsChasis], [t].[TruckNo], [t].[TruckingCompanyId]
+FROM [Trucks] AS [t]
+WHERE [t].[Id] = @__p_0
+ 2024-09-20 18:04:20,591  WARN TruckingCompanyApi.Services.AppointmentService.MoveNext [(null)] [55] - MESSAGE: Truck with ID 1 not found.
+ 2024-09-20 18:04:20,593 ERROR TruckingCompanyApi.Controllers.AppointmentsController.MoveNext [(null)] [74] - MESSAGE: Invalid appointment data.
+ System.InvalidOperationException: Truck not found.
+   at TruckingCompanyApi.Services.AppointmentService.CreateAppointment(Appointment appointment) in C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment\Services\AppointmentService.cs:line 56
+   at TruckingCompanyApi.Controllers.AppointmentsController.CreateAppointment(Appointment appointment) in C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment\Controllers\AppointmentController.cs:line 74
+2024-09-20 18:04:56,614  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[DriverName], [t].[IsChasis], [t].[TruckNo], [t].[TruckingCompanyId]
+FROM [Trucks] AS [t]
+WHERE [t].[Id] = @__p_0
+ 2024-09-20 18:04:56,811  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (18ms) [Parameters=[@p0='?' (DbType = DateTime2), @p1='?' (Size = 4000), @p2='?' (DbType = Int32), @p3='?' (Size = 4000), @p4='?' (DbType = Int32), @p5='?' (DbType = Int32), @p6='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Appointments] ([AppointmentDate], [ContainerNumber], [TerminalId], [TicketNumber], [TruckId], [TruckingCompanyId], [WorkType])
+OUTPUT INSERTED.[Id]
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+ 2024-09-20 18:05:22,501  INFO Microsoft.EntityFrameworkCore.Database.Command.? [(null)] [?] - MESSAGE: Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [t].[Id], [t].[DriverName], [t].[IsChasis], [t].[TruckNo], [t].[TruckingCompanyId]
+FROM [Trucks] AS [t]
+WHERE [t].[Id] = @__p_0
+ 2024-09-20 18:05:22,503  WARN TruckingCompanyApi.Services.AppointmentService.MoveNext [(null)] [55] - MESSAGE: Truck with ID 1 not found.
+ 2024-09-20 18:05:22,504 ERROR TruckingCompanyApi.Controllers.AppointmentsController.MoveNext [(null)] [74] - MESSAGE: Invalid appointment data.
+ System.InvalidOperationException: Truck not found.
+   at TruckingCompanyApi.Services.AppointmentService.CreateAppointment(Appointment appointment) in C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment\Services\AppointmentService.cs:line 56
+   at TruckingCompanyApi.Controllers.AppointmentsController.CreateAppointment(Appointment appointment) in C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment\Controllers\AppointmentController.cs:line 74

@@ -40,5 +40,17 @@
         <member name="M:Appointment_Api.Migrations.intialcreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:Appointment_Api.Migrations.initialCreate_">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.initialCreate_.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.initialCreate_.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Appointment_Api.Migrations.initialCreate_.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

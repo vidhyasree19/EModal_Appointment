@@ -1,0 +1,6 @@
+2024-09-21 15:39:10,376  INFO Microsoft.Hosting.Lifetime.Invoke [(null)] [0] - MESSAGE: Application is shutting down...
+ 2024-09-21 15:39:24,400  INFO Microsoft.Hosting.Lifetime.? [(null)] [?] - MESSAGE: Now listening on: http://localhost:5220
+ 2024-09-21 15:39:24,457  INFO Microsoft.Hosting.Lifetime.OnApplicationStarted [(null)] [0] - MESSAGE: Application started. Press Ctrl+C to shut down.
+ 2024-09-21 15:39:24,463  INFO Microsoft.Hosting.Lifetime.OnApplicationStarted [(null)] [0] - MESSAGE: Hosting environment: Development
+ 2024-09-21 15:39:24,464  INFO Microsoft.Hosting.Lifetime.Invoke [(null)] [0] - MESSAGE: Content root path: C:\Users\VidhyaSreeChinthalap\Downloads\EModal_Appointment (1)\EModal_Appointment
+ 

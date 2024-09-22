@@ -9,13 +9,15 @@ namespace TruckingCompanyApi.Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(Roles = "Admin")]
-    public class TruckingCompanyController : ControllerBase
+    public class TruckingCompaniesController : ControllerBase
     {
         private readonly ITruckingCompanyService _truckingCompanyService;
+        private readonly ILogger<TruckingCompaniesController> _logger;
 
-        public TruckingCompanyController(ITruckingCompanyService truckingCompanyService)
+        public TruckingCompaniesController(ITruckingCompanyService truckingCompanyService,ILogger<TruckingCompaniesController> logger)
         {
             _truckingCompanyService = truckingCompanyService;
+            _logger=logger;
         }
 
         // GET: api/TruckingCompany
@@ -32,7 +34,10 @@ namespace TruckingCompanyApi.Controllers
         {
             var company = await _truckingCompanyService.Get(id);
             if (company == null)
+                {
+                _logger.LogWarning($"Trucking company with ID {id} not found.");
                 return NotFound();
+            }
 
             return Ok(company);
         }
@@ -42,13 +47,20 @@ namespace TruckingCompanyApi.Controllers
         public async Task<IActionResult> Create([FromBody] TruckingCompany company)
         {
             if (company == null)
+                {
+                _logger.LogError("Trucking company object is null.");
                 return BadRequest("Trucking company object is null.");
+            }
 
             if (!ModelState.IsValid)
+                {
+                _logger.LogError("Model state is invalid. Trucking Company");
                 return BadRequest(ModelState);
+            }
 
             if (await _truckingCompanyService.TruckingCompanyExists(company.Name))
-            {
+           {
+                _logger.LogWarning($"A TruckingCompany with the name {company.Name} already exists.");
                 return Conflict(new { message = "A TruckingCompany with the same name already exists." });
             }
 
@@ -63,12 +75,16 @@ namespace TruckingCompanyApi.Controllers
         {
             if (company == null || company.Id != id)
             {
+                _logger.LogError("Trucking company object is null or ID mismatch.");
             var m ="enter correct id";
                 return BadRequest(m);
             }
             var updated = await _truckingCompanyService.Update(id, company);
             if (!updated)
+               {
+                _logger.LogWarning($"Trucking company with ID {id} not found for update.");
                 return NotFound();
+            }
 
             return Ok("Trucking company updated successfully.");
         }
@@ -79,7 +95,11 @@ namespace TruckingCompanyApi.Controllers
         {
             var deleted = await _truckingCompanyService.Delete(id);
             if (!deleted)
+               if (!deleted)
+            {
+                _logger.LogWarning($"Trucking company with ID {id} not found for deletion.");
                 return NotFound();
+            }
 
              return Ok("Trucking company has been deleted successfully .");
 

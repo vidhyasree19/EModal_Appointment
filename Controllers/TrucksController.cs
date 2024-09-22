@@ -2,18 +2,21 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using TruckingCompanyApi.Models;
 using TruckingCompanyApi.Services;
-
+using Microsoft.AspNetCore.Authorization;
 namespace TruckingCompanyApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TruckController : ControllerBase
+    [Authorize(Roles = "Admin")]
+    public class TrucksController : ControllerBase
     {
         private readonly ITruckService _truckService;
+         private readonly ILogger<TrucksController> _logger;
 
-        public TruckController(ITruckService truckService)
+        public TrucksController(ITruckService truckService,ILogger<TrucksController> logger)
         {
             _truckService = truckService;
+            _logger = logger;
         }
 
         // GET: api/Truck
@@ -31,6 +34,7 @@ namespace TruckingCompanyApi.Controllers
             var truck = await _truckService.GetTruckByIdAsync(id);
             if (truck == null)
             {
+                _logger.LogWarning($"Truck with ID {id} not found.");
                 return NotFound();
             }
 
@@ -41,6 +45,11 @@ namespace TruckingCompanyApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Truck>> CreateTruck(Truck truck)
         {
+             if (truck == null)
+            {
+                _logger.LogError("Truck object is null. check all the fields of truck");
+                return BadRequest("Truck object is null.");
+            }
             var createdTruck = await _truckService.CreateTruckAsync(truck);
             return CreatedAtAction(nameof(GetTruck), new { id = createdTruck.Id }, createdTruck);
         }
@@ -49,9 +58,10 @@ namespace TruckingCompanyApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTruck(int id, Truck truck)
         {
-            if (id != truck.Id)
+            if (id != truck.Id||truck==null)
             {
-                return BadRequest();
+                  _logger.LogError("Tried for updating truck details without details,  truck object null or truck ID mismatch");
+                return BadRequest("Truck object is null.Try with correct ID");
             }
 
             await _truckService.UpdateTruckAsync(id, truck);
@@ -65,6 +75,7 @@ namespace TruckingCompanyApi.Controllers
             var truck = await _truckService.GetTruckByIdAsync(id);
             if (truck == null)
             {
+                _logger.LogWarning($" tried Truck with ID {id} not found for deletion.");
                 return NotFound();
             }
 

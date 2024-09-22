@@ -7,10 +7,16 @@ using TruckingCompanyApi.Models;
 using AppointmentApi.Data;
 using System.Text.Json.Serialization;
 using TruckingCompanyApi.Services;
-using TermianlApi.Services;  // Adjusted to use the correct namespace for TerminalService
+using Microsoft.Extensions.Logging;
+using TermianlApi.Services;
+using System.IO;
+using log4net;
+using log4net.Config;
+// Adjusted to use the correct namespace for TerminalService
 
 var builder = WebApplication.CreateBuilder(args);
-
+var logRepository = LogManager.GetRepository(System.Reflection.Assembly.GetEntryAssembly());
+XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
 // Add services to the container.
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -55,7 +61,9 @@ builder.Services.AddSwaggerGen(c =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
-
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+builder.Logging.ClearProviders();
+builder.Logging.AddLog4Net();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
